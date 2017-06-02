@@ -1,14 +1,19 @@
 <!-- Release 1  -->
 
 <!-- 1. Hitung jumlah vote untuk Sen. Olympia Snowe yang memiliki id 524. -->
+SELECT count(voters.id) FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id where congress_members.id=524;
 
 <!-- 2. Sekarang lakukan JOIN tanpa menggunakan id `524`. Query kedua tabel votes dan congress_members. -->
+SELECT count(voters.id) FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id where congress_members.name like '%Snowe%';
 
 <!-- 3. Sekarang gimana dengan representative Erik Paulsen? Berapa banyak vote yang dia dapatkan? -->
+SELECT count(voters.id) FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id where congress_members.name like '%Paulsen%';
 
 <!-- 4. Buatlah daftar peserta Congress yang mendapatkan vote terbanyak. Jangan sertakan field `created_at` dan `updated_at`. -->
+SELECT congress_members.name,count(voters.first_name) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes DESC LIMIT 3;
 
 <!-- 5. Sekarang buatlah sebuah daftar semua anggota Congress yang setidaknya mendapatkan beberapa vote dalam urutan dari yang paling sedikit. Dan juga jangan sertakan field-field yang memiliki tipe date. -->
+SELECT congress_members.name,count(voters.first_name) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes ASC LIMIT 3;
 
 <!-- Release 2  -->
 
