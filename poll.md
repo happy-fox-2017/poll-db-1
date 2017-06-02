@@ -1,13 +1,19 @@
 <!-- Release 1  -->
-
+  1. SELECT COUNT(id) FROM votes WHERE politician_id = 524;
 <!-- 1. Hitung jumlah vote untuk Sen. Olympia Snowe yang memiliki id 524. -->
 
+  2. SELECT * FROM  votes LEFT OUTER JOIN congress_members ON         congress_members.id   = votes.id WHERE congress_members.name='Sen. Olympia Snowe';
 <!-- 2. Sekarang lakukan JOIN tanpa menggunakan id `524`. Query kedua tabel votes dan congress_members. -->
 
+  3. SELECT  COUNT(votes.id) from votes JOIN congress_members ON  votes.politician_id=congress_members.id WHERE congress_members.name ='Erik Paulsen';
 <!-- 3. Sekarang gimana dengan representative Erik Paulsen? Berapa banyak vote yang dia dapatkan? -->
 
+4. SELECT congress_members.name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current,congress_members.years_in_congress,congress_members.dw1_score,
+COUNT(votes.id) AS 'numbers_of_votes' from congress_members JOIN votes  ON votes.politician_id=congress_members.id  GROUP BY votes.politician_id ORDER BY COUNT(votes.id) DESC LIMIT 3;
 <!-- 4. Buatlah daftar peserta Congress yang mendapatkan vote terbanyak. Jangan sertakan field `created_at` dan `updated_at`. -->
 
+5. SELECT congress_members.name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current,congress_members.years_in_congress,congress_members.dw1_score,
+COUNT(votes.id) AS 'numbers_of_votes' from congress_members JOIN votes  ON votes.politician_id=congress_members.id  GROUP BY votes.politician_id ORDER BY COUNT(votes.id) ASC LIMIT 3;
 <!-- 5. Sekarang buatlah sebuah daftar semua anggota Congress yang setidaknya mendapatkan beberapa vote dalam urutan dari yang paling sedikit. Dan juga jangan sertakan field-field yang memiliki tipe date. -->
 
 <!-- Release 2  -->
@@ -21,3 +27,9 @@
 <!-- 4. List orang-orang yang vote lebih dari dua kali. Harusnya mereka hanya bisa vote untuk posisi Senator dan satu lagi untuk wakil. Wow, kita dapat si tukang curang! Segera laporkan ke KPK!! -->
 
 <!-- 5. Apakah ada orang yang melakukan vote kepada politisi yang sama dua kali? Siapa namanya dan siapa nama politisinya? -->
+
+
+
+
+
+//select * from votes LEFT OUTER JOIN voters ON votes.voter_id=voters.id LEFT OUTER JOIN congress_members ON votes.politician_id = congress_members.id;
