@@ -1,1 +1,0 @@
-select COUNT(id) from votes where politician_id = 524
