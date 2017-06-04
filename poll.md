@@ -10,19 +10,32 @@ SELECT count(voters.id) FROM votes LEFT outer JOIN voters ON votes.voter_id=vote
 SELECT count(voters.id) FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id where congress_members.name like '%Paulsen%';
 
 <!-- 4. Buatlah daftar peserta Congress yang mendapatkan vote terbanyak. Jangan sertakan field `created_at` dan `updated_at`. -->
-SELECT congress_members.name,count(voters.first_name) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes DESC LIMIT 3;
+SELECT congress_members.name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current,count(voters.id) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes DESC LIMIT 3;
 
 <!-- 5. Sekarang buatlah sebuah daftar semua anggota Congress yang setidaknya mendapatkan beberapa vote dalam urutan dari yang paling sedikit. Dan juga jangan sertakan field-field yang memiliki tipe date. -->
-SELECT congress_members.name,count(voters.first_name) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes ASC LIMIT 3;
+SELECT congress_members.name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current,count(voters.id) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes ASC;
 
 <!-- Release 2  -->
 
 <!-- 1. Siapa anggota Congress yang mendapatkan vote terbanyak? List nama mereka dan jumlah vote-nya. Siapa saja yang memilih politisi tersebut? List nama mereka, dan jenis kelamin mereka. -->
+SELECT congress_members.name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current,count(voters.id) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes DESC;
+
+SELECT congress_members.name,voters.first_name,voters.gender,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id order by congress_members.name;
+
 
 <!-- 2. Berapa banyak vote yang diterima anggota Congress yang memiliki grade di bawah 9 (gunakan field `grade_current`)? Ambil nama, lokasi, grade_current dan jumlah vote. -->
 
+SELECT congress_members.name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current,count(voters.id) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id where congress_members.grade_current < 9 group by congress_members.name order by sum_votes DESC ;
+
 <!-- 3. Apa saja 10 negara bagian yang memiliki voters terbanyak? List semua orang yang melakukan vote di negara bagian yang paling populer. (Akan menjadi daftar yang panjang, kamu bisa gunakan hasil dari query pertama untuk menyederhanakan query berikut ini.) -->
+
+SELECT congress_members.name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current,count(voters.id) as sum_votes FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by congress_members.name order by sum_votes DESC LIMIT 10;
 
 <!-- 4. List orang-orang yang vote lebih dari dua kali. Harusnya mereka hanya bisa vote untuk posisi Senator dan satu lagi untuk wakil. Wow, kita dapat si tukang curang! Segera laporkan ke KPK!! -->
 
+SELECT congress_members.name,voters.first_name,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id order by voters.id;
+
+SELECT voters.first_name,congress_members.name,count(voters.id) as total_votes,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by voters.id having total_votes > 2 order by total_votes;
+
 <!-- 5. Apakah ada orang yang melakukan vote kepada politisi yang sama dua kali? Siapa namanya dan siapa nama politisinya? -->
+SELECT voters.first_name,congress_members.name,count(voters.id) as total_votes,congress_members.party,congress_members.location,congress_members.grade_1996,congress_members.grade_current FROM votes LEFT outer JOIN voters ON votes.voter_id=voters.id left outer join congress_members on votes.politician_id=congress_members.id group by voters.id order by total_votes;
