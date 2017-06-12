@@ -7,7 +7,7 @@
 <!-- 2. Sekarang lakukan JOIN tanpa menggunakan id `524`. Query kedua tabel votes dan congress_members. -->
      2. SELECT * FROM congress_members
      LEFT JOIN votes ON congress_members.id = votes.politician_id
-     WHERE congress_members.id = 524;
+     WHERE congress_members.name = 'Sen. Olympia Snowe';
 
 <!-- 3. Sekarang gimana dengan representative Erik Paulsen? Berapa banyak vote yang dia dapatkan? -->
      3. SELECT COUNT(votes.id)
